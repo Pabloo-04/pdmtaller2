@@ -1,0 +1,25 @@
+package com.pdmtaller2.C00080323_PabloVides.ui.screens
+
+import com.pdmtaller2.C00080323_PabloVides.ui.layout.CustomScaffold
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+
+
+@Composable
+fun OrderScreen(navController: NavHostController) {
+    CustomScaffold(navController = navController) {
+        Column(
+            modifier = Modifier.fillMaxSize().padding(16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("Notifications Screen", fontSize = 24.sp)
+        }
+    }
+}

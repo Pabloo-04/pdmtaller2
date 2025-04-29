@@ -1,0 +1,32 @@
+package com.pdmtaller2.C00080323_PabloVides.navigation
+
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import kotlinx.serialization.Serializable
+
+import com.pdmtaller2.C00080323_PabloVides.ui.screens.ListScreen
+import com.pdmtaller2.C00080323_PabloVides.ui.screens.OrderScreen
+import com.pdmtaller2.C00080323_PabloVides.ui.screens.SearchScreen
+
+@Serializable
+object List
+
+@Serializable
+object Search
+
+@Serializable
+object Order
+
+
+
+
+@Composable
+fun NavGraph(navController: NavHostController) {
+    NavHost(navController = navController, startDestination = List) {
+        composable<List> { ListScreen(navController) }
+        composable<Search> { SearchScreen(navController) }
+        composable<Order>{ OrderScreen(navController) }
+    }
+}
