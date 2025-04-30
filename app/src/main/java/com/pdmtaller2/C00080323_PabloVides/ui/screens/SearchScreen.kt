@@ -28,10 +28,10 @@ fun SearchScreen(navController: NavHostController, restaurantId: Int) {
     var filteredDishes by remember { mutableStateOf(selectedRestaurant?.dishes ?: emptyList()) }
     var isLoading by remember { mutableStateOf(false) }
 
-    // Filter dishes based on search query
+
     LaunchedEffect(searchQuery) {
         isLoading = true
-        delay(500) // Simulate a delay (for loading, could be replaced by actual async)
+        delay(500)
         filteredDishes = selectedRestaurant?.dishes?.filter { dish ->
             dish.name.contains(searchQuery, ignoreCase = true)
         } ?: emptyList()
@@ -51,7 +51,7 @@ fun SearchScreen(navController: NavHostController, restaurantId: Int) {
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
-                // Search input field
+
                 TextField(
                     value = searchQuery,
                     onValueChange = { searchQuery = it },
@@ -61,13 +61,12 @@ fun SearchScreen(navController: NavHostController, restaurantId: Int) {
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Show loading indicator if searching
                 if (isLoading) {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
                     Spacer(modifier = Modifier.height(16.dp))
                 }
 
-                // Display filtered dishes
+
                 LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     items(filteredDishes) { dish ->
                         DishCard(dish = dish) {
