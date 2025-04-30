@@ -1,32 +1,42 @@
 package com.pdmtaller2.C00080323_PabloVides.ui.screens
-
 import Restaurants
-import com.pdmtaller2.C00080323_PabloVides.ui.layout.CustomScaffold
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.compose.runtime.rememberCoroutineScope
-import kotlinx.coroutines.launch
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
+import androidx.compose.foundation.lazy.items
 import com.pdmtaller2.C00080323_PabloVides.data.Restaurant
 import com.pdmtaller2.C00080323_PabloVides.ui.components.DishCard
-
+import com.pdmtaller2.C00080323_PabloVides.ui.layout.CustomScaffold
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun SearchScreen(navController: NavHostController, restaurantId: Int) {
     val selectedRestaurant = Restaurants.find { it.id == restaurantId }
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+
+
+    var searchQuery by remember { mutableStateOf("") }
+    var filteredDishes by remember { mutableStateOf(selectedRestaurant?.dishes ?: emptyList()) }
+    var isLoading by remember { mutableStateOf(false) }
+
+    // Filter dishes based on search query
+    LaunchedEffect(searchQuery) {
+        isLoading = true
+        delay(500) // Simulate a delay (for loading, could be replaced by actual async)
+        filteredDishes = selectedRestaurant?.dishes?.filter { dish ->
+            dish.name.contains(searchQuery, ignoreCase = true)
+        } ?: emptyList()
+        isLoading = false
+    }
 
     CustomScaffold(navController = navController, snackbarHostState = snackbarHostState) {
         Column(
@@ -41,8 +51,25 @@ fun SearchScreen(navController: NavHostController, restaurantId: Int) {
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
+                // Search input field
+                TextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    label = { Text("Search for a dish") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Show loading indicator if searching
+                if (isLoading) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
+
+                // Display filtered dishes
                 LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    items(selectedRestaurant.dishes) { dish ->
+                    items(filteredDishes) { dish ->
                         DishCard(dish = dish) {
                             coroutineScope.launch {
                                 snackbarHostState.showSnackbar(
