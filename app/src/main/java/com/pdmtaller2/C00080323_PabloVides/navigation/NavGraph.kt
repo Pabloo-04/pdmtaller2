@@ -1,9 +1,11 @@
 package com.pdmtaller2.C00080323_PabloVides.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.pdmtaller2.C00080323_PabloVides.data.Restaurant
 import kotlinx.serialization.Serializable
 
 import com.pdmtaller2.C00080323_PabloVides.ui.screens.ListScreen
@@ -14,7 +16,7 @@ import com.pdmtaller2.C00080323_PabloVides.ui.screens.SearchScreen
 object List
 
 @Serializable
-object Search
+data class Search(val restaurantId: Int)
 
 @Serializable
 object Order
@@ -25,8 +27,17 @@ object Order
 @Composable
 fun NavGraph(navController: NavHostController) {
     NavHost(navController = navController, startDestination = List) {
-        composable<List> { ListScreen(navController) }
-        composable<Search> { SearchScreen(navController) }
-        composable<Order>{ OrderScreen(navController) }
+        composable<List> {
+            val onRestaurantClick = { ClickId: Int ->
+                navController.navigate(SearchScreen(navController, ClickId))
+            }
+            ListScreen(navController, onClick = )
+        }
+
+        composable<Search> {
+        }
+
+
+        // Add Order screen similarly
     }
 }

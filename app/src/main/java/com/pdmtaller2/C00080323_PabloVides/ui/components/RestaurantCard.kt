@@ -17,17 +17,18 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.pdmtaller2.C00080323_PabloVides.data.Restaurant
 
+
 @Composable
-fun RestaurantCard(restaurant: Restaurant, onClick: () -> Unit) {
+fun RestaurantCard(restaurant: Restaurant, onClick: (Restaurant) -> Unit) {
     Card(
         modifier = Modifier
             .width(250.dp)
             .height(160.dp)
-            .clickable { onClick() },
+            .clickable { onClick(restaurant) },
         elevation = CardDefaults.cardElevation()
     ) {
         Column {
-           AsyncImage(
+            AsyncImage(
                 model = restaurant.imageUrl,
                 contentDescription = restaurant.name,
                 modifier = Modifier
@@ -39,11 +40,7 @@ fun RestaurantCard(restaurant: Restaurant, onClick: () -> Unit) {
                 text = restaurant.name,
                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
             )
-            Text(
-                text = restaurant.description,
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(horizontal = 8.dp)
-            )
         }
     }
 }
+

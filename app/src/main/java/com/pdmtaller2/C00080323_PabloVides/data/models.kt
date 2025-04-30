@@ -1,5 +1,8 @@
 package com.pdmtaller2.C00080323_PabloVides.data
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Dish(
     val id: Int,
     val name: String,
@@ -7,9 +10,7 @@ data class Dish(
     val imageUrl: String
 )
 
-
-
-
+@Serializable
 data class Restaurant(
     val id: Int,
     val name: String,
