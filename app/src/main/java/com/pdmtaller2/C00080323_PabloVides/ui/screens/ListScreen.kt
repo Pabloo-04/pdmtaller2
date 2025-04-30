@@ -53,7 +53,7 @@ fun ListScreen(navController: NavHostController, onClick: (Int) -> Unit) {
 fun CategoryRow(
     category: String,
     restaurants: List<Restaurant>,
-   onClick: (Int) -> Unit,
+    onClick: (Int) -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -72,11 +72,9 @@ fun CategoryRow(
             items(restaurants) { restaurant ->
                 RestaurantCard(
                     restaurant = restaurant,
-                    onClick = {onClick}
+                    onClick = { onClick(restaurant.id) } // ✅ Fix is here
                 )
-
             }
         }
     }
 }
-

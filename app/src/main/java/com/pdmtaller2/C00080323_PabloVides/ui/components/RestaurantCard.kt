@@ -19,12 +19,12 @@ import com.pdmtaller2.C00080323_PabloVides.data.Restaurant
 
 
 @Composable
-fun RestaurantCard(restaurant: Restaurant, onClick: (Restaurant) -> Unit) {
+fun RestaurantCard(restaurant: Restaurant, onClick: (Int) -> Unit) {
     Card(
         modifier = Modifier
             .width(250.dp)
             .height(160.dp)
-            .clickable { onClick(restaurant) },
+            .clickable { onClick(restaurant.id) },
         elevation = CardDefaults.cardElevation()
     ) {
         Column {

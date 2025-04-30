@@ -16,7 +16,13 @@ import com.pdmtaller2.C00080323_PabloVides.ui.screens.SearchScreen
 object List
 
 @Serializable
-data class Search(val restaurantId: Int)
+data class Search(val restaurantId: Int) {
+    companion object {
+        fun create(restaurantId: Int): String {
+            return "search_screen/$restaurantId"
+        }
+    }
+}
 
 @Serializable
 object Order
@@ -26,18 +32,16 @@ object Order
 
 @Composable
 fun NavGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = List) {
-        composable<List> {
-            val onRestaurantClick = { ClickId: Int ->
-                navController.navigate(SearchScreen(navController, ClickId))
+    NavHost(navController = navController, startDestination = "list") {
+        composable("list") {
+            ListScreen(navController) { restaurantId ->
+                navController.navigate("search_screen/$restaurantId")
             }
-            ListScreen(navController, onClick = )
         }
 
-        composable<Search> {
+        composable("search_screen/{restaurantId}") { backStackEntry ->
+            val restaurantId = backStackEntry.arguments?.getString("restaurantId")?.toIntOrNull() ?: 0
+            SearchScreen(navController, restaurantId)
         }
-
-
-        // Add Order screen similarly
     }
 }
