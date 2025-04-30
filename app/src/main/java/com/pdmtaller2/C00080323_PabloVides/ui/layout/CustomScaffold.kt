@@ -18,16 +18,14 @@ import androidx.navigation.NavHostController
 @Composable
 fun CustomScaffold(
     navController: NavHostController,
+    snackbarHostState: SnackbarHostState? = null,
     content: @Composable () -> Unit
 ) {
-    val coroutineScope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
-
     Scaffold(
         bottomBar = {
-            CustomBottomBar(navController = navController) // ✅ Pass navController
+            CustomBottomBar(navController = navController)
         },
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+        snackbarHost = { snackbarHostState?.let { SnackbarHost(hostState = it) } }  // Only show snackbar if state is provided
     ) { innerPadding ->
         Column(
             modifier = Modifier

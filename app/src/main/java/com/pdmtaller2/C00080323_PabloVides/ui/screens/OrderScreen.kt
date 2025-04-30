@@ -39,7 +39,7 @@ fun OrderScreen(navController: NavHostController, restaurant: Restaurant?) {
 
                 LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     items(restaurant.dishes) { dish ->
-                        DishCard(dish = dish)
+
                     }
                 }
             }
